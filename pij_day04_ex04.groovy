@@ -1,37 +1,27 @@
-int decimalNumber
-String decimalString, binaryString
-println ""
 println "BINARY-DECIMAL & DECIMAL-BINARY CONVERSION"
-boolean noMore = false
-while (!noMore) {
-	println "You have 2 options"
+// Trying out using a labelled break
+mainloop: while (true) {
 	println "Enter 1 for Binary-to-Decimal, 2 for Decimal-to-Binary or 0 to exit"
-	conversionChoice = Integer.parseInt(System.console().readLine())
-	if (conversionChoice == 1) {
-		print "enter binary number: "
-		binaryString = System.console().readLine()
-		decimalNumber = binary2decimal(binaryString)
-		println "corresponding decimal number = " + decimalNumber
-	} else if (conversionChoice == 2) {
-		print "enter decimal number: "
-		decimalString = System.console().readLine()
-		decimalNumber = Integer.parseInt(decimalString)
-		binaryString = decimal2binary(decimalNumber)
-		println "corresponding binary number = " + binaryString
-	} else {
-		noMore = true
+	switch (Integer.parseInt(System.console().readLine())) {
+		case 1:
+			print "enter binary number: "
+			println "converted to decimal = " + binary2decimal(System.console().readLine())
+			break;
+		case 2:
+			print "enter decimal number: "
+			println "converted to binary = " + decimal2binary(Integer.parseInt(System.console().readLine()))
+			break;
+		default:
+			break mainloop;
 	}
 }
 
 int binary2decimal(String binaryString) {
-	String binaryLetter
 	int binaryDigit, powerOf2
-	int numberOfDigits = binaryString.length()
 	int result = 0
-	for (i=0;i<numberOfDigits;i++) {
-		binaryLetter = binaryString.substring(i,i+1)
-		binaryDigit = Integer.parseInt(binaryLetter)
-		powerOf2 = numberOfDigits - i - 1
+	for (i=0;i<binaryString.length();i++) {
+		binaryDigit = Integer.parseInt(binaryString.substring(i,i+1))
+		powerOf2 = binaryString.length() - i - 1
 		result = result + binaryDigit * Math.pow(2,powerOf2)
 	}
 	return result
@@ -39,11 +29,9 @@ int binary2decimal(String binaryString) {
 
 String decimal2binary(int decimalNumber) {
 	String result = ""
-	int remainder
 	while (decimalNumber!=0) {
-		remainder = decimalNumber % 2
+		result = decimalNumber % 2 + result
 		decimalNumber = decimalNumber / 2
-		result = remainder + result
 	}
 	return result
 }
